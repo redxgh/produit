@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.w3.org/1999/xhtml">
+<link rel="stylesheet" type="text/css"
+      href="webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
+<script src="webjars/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript"
+        src="webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<head>
+    <meta charset="utf-8">
+    <title>Gestion des produits</title>
+</head>
+<body>
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <!-- Brand -->
+    <a class="navbar-brand" href="#">Gestion de produits</a>
+    <!-- Links -->
+    <ul class="navbar-nav">
+
+        <!-- Dropdown -->
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                produits
+            </a>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" th:href="@{showCreate}">Ajouter</a>
+                <a class="dropdown-item" th:href="@{ListeProduits}">Lister</a>
+            </div>
+        </li>
+        <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbar" data-toggle="dropdown">
+            Categorie
+        </a>
+        <div class="dropdown-menu">
+            <a class="dropdown-item" th:href="@{showCategorie}" sec:authorize="hasRole('ADMIN')">Ajouter</a>
+            <a class="dropdown-item" th:href="@{ListeCategories}" sec:authorize="hasRole('ADMIN')">Lister</a>
+        </div>
+        </li>
+        <li class="nav-item">
+            <a class="btn btn-danger" th:href="@{/logout}">Logout</a>
+        </li>
+    </ul>
+    <div layout:fragment="navbar"></div>
+</nav>
+</body>
+</html>
