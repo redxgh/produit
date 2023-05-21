@@ -38,15 +38,13 @@ public class UserService implements UserDetailsService {
         return userRepository.findUserWithName(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
-    public User saveUser(String username, String password, String confirmedPassword) {
+    public User saveUser(String username, String password, String role) {
         User appUser = new User();
         if (userRepository.findUserWithName(username).isPresent())
             throw new RuntimeException("User already exists");
-        if (!password.equals(confirmedPassword))
-            throw new RuntimeException("Please confirm your password");
         appUser.setUsername(username);
         Set<Role> roles = new HashSet<Role>();
-        Role r = new Role("ROLE_USER");
+        Role r = new Role(role);
         roleRepository.save(r);
         roles.add(r);
         appUser.setRoles(roles);

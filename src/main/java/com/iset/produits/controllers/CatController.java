@@ -1,11 +1,14 @@
 package com.iset.produits.controllers;
 
+import com.iset.produits.dao.RoleRepository;
+import com.iset.produits.dao.UserRepository;
 import com.iset.produits.entities.Categorie;
 import com.iset.produits.entities.Produit;
 import com.iset.produits.entities.Role;
 import com.iset.produits.entities.User;
 import com.iset.produits.service.CategorieService;
 import com.iset.produits.service.ProduitService;
+import com.iset.produits.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -29,6 +32,12 @@ public class CatController {
     ProduitService produitService;
     @Autowired
     CategorieService categorieService;
+    @Autowired
+    RoleRepository roleRepository;
+    @Autowired
+    UserRepository userRepository;
+    @Autowired
+    UserService userService;
     @RequestMapping("/showCreate")
     public String showCreate(@RequestParam(name = "id", defaultValue = "") Long id, ModelMap modelMap)
     {
@@ -191,14 +200,17 @@ public class CatController {
     }
     @PostMapping("/addUser")
     public String addUser(@RequestParam("name") String name,@RequestParam("password") String password , @RequestParam("Role") String role) {
+        //userService.saveUser(name,password,role);
         User user = new User();
         user.setUsername(name);
         user.setPassword(password);
         Role role1  = new Role();
         role1.setName(role);
+        roleRepository.save(role1);
         Set<Role> roles = new HashSet<>();
         roles.add(role1);
         user.setRoles(roles);
+        userRepository.save(user);
         return "login";
     }
 }
